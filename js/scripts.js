@@ -25,7 +25,7 @@ require([
 
     const layer = new FeatureLayer({
         portalItem: {
-            id: "4134667d27d24e0cb7aef00cebda5bf2"
+            id: "dfe2d606134546f5a712e689d76540ac"
         },
         definitionExpression: "Year_Built > 0",
         title: "Building Footprints",
@@ -45,7 +45,7 @@ require([
     const view = new MapView({
         map: map,
         container: "viewDiv",
-        center: [-1.3064915,36.7939919],
+        center: [36.7939919, -1.3064915], 
         zoom: 12,
         constraints: {
             snapToZoom: false,
@@ -183,12 +183,12 @@ require([
                     stops: [
                         {
                             value: year,
-                            color: "#0ff",
+                            color: "aqua",
                             label: "in " + Math.floor(year)
                         },
                         {
                             value: year - 10,
-                            color: "#f0f",
+                            color: "yellow",
                             label: "in " + (Math.floor(year) - 20)
                         },
                         {
@@ -278,6 +278,101 @@ require([
         animation.remove();
         animation = null;
         playButton.classList.remove("toggled");
+    }
+
+    /**
+     * Animates the color visual variable continously
+     */
+     function animate(startValue) {
+        let animating = true;
+        let value = startValue;
+
+        const frame = (timestamp) => {
+            if (!animating) {
+                return;
+            }
+
+            value += 0.5;
+            if (value > 2022) {
+                value = 1901;
+            }
+
+            setYear(value);
+
+            // Update at 30fps
+            setTimeout(() => {
+                requestAnimationFrame(frame);
+            }, 1000 / 30);
+        };
+
+        frame();
+
+        return {
+            remove: () => {
+                animating = false;
+            }
+        };
+    }
+
+     /**
+     * Creates a tooltip to display a the construction year of a building.
+     */
+      function createTooltip() {
+        const tooltip = document.createElement("div");
+        const style = tooltip.style;
+
+        tooltip.setAttribute("role", "tooltip");
+        tooltip.classList.add("tooltip");
+
+        const textElement = document.createElement("div");
+        textElement.classList.add("esri-widget");
+        tooltip.appendChild(textElement);
+
+        view.container.appendChild(tooltip);
+
+        let x = 0;
+        let y = 0;
+        let targetX = 0;
+        let targetY = 0;
+        let visible = false;
+
+        // move the tooltip progressively
+        function move() {
+            x += (targetX - x) * 0.1;
+            y += (targetY - y) * 0.1;
+
+            if (Math.abs(targetX - x) < 1 && Math.abs(targetY - y) < 1) {
+                x = targetX;
+                y = targetY;
+            } else {
+                requestAnimationFrame(move);
+            }
+
+            style.transform =
+                "translate3d(" + Math.round(x) + "px," + Math.round(y) + "px, 0)";
+        }
+
+        return {
+            show: (point, text) => {
+                if (!visible) {
+                    x = point.x;
+                    y = point.y;
+                }
+
+                targetX = point.x;
+                targetY = point.y;
+                style.opacity = 1;
+                visible = true;
+                textElement.innerHTML = text;
+
+                move();
+            },
+
+            hide: () => {
+                style.opacity = 0;
+                visible = false;
+            }
+        };
     }
 
 
