@@ -25,12 +25,12 @@ require([
 
     const layer = new FeatureLayer({
         portalItem: {
-            id: "dfe2d606134546f5a712e689d76540ac"
+            id: "4134667d27d24e0cb7aef00cebda5bf2"
         },
         definitionExpression: "Year_Built > 0",
         title: "Building Footprints",
         minScale: 72223.819286,
-        effect: "bloom(2.5 0 0.5)"
+        effect: "bloom(1.5 0 0.5)"
     });
 
     const map = new Map({
@@ -122,7 +122,7 @@ require([
     view.whenLayerView(layer).then(setupHoverTooltip);
 
     // Starts the application by visualizing year 1984
-    setYear(1990);
+    setYear(1904);
 
     //--------------------------------------------------------------------------
     //
@@ -168,7 +168,7 @@ require([
             visualVariables: [
                 {
                     type: "opacity",
-                    field: "CNSTRCT_YR",
+                    field: "Year_Built",
                     stops: opacityStops,
                     legendOptions: {
                         showLegend: false
@@ -176,19 +176,19 @@ require([
                 },
                 {
                     type: "color",
-                    field: "CNSTRCT_YR",
+                    field: "Year_Built",
                     legendOptions: {
                         title: "Built:"
                     },
                     stops: [
                         {
                             value: year,
-                            color: "aqua",
+                            color: "#0ff",
                             label: "in " + Math.floor(year)
                         },
                         {
                             value: year - 10,
-                            color: "yellow",
+                            color: "#f0f",
                             label: "in " + (Math.floor(year) - 20)
                         },
                         {
@@ -246,7 +246,7 @@ require([
                         highlight = layerview.highlight(graphic);
                         tooltip.show(
                             screenPoint,
-                            "Built in " + graphic.getAttribute("CNSTRCT_YR")
+                            "Built in " + graphic.getAttribute("Year_Built")
                         );
                     } else {
                         tooltip.hide();
