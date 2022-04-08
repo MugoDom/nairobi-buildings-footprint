@@ -77,7 +77,7 @@ body{
     color: brown;
 }
 .toggle-button .toggle-button-icon{
-    color: chartreuse;
+    color: yellow;
 }
 .toggle-button> :nth-child(2) {
     display: none;
