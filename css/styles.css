@@ -74,7 +74,7 @@ body{
     display: flex;
 }
 .toggle-button.toggled .toggle-button-icon{
-    color: brown;
+    color: red;
 }
 .toggle-button .toggle-button-icon{
     color: yellow;
