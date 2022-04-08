@@ -51,10 +51,6 @@ require([
             snapToZoom: false,
             minScale: 72223.819286
         },
-        // This ensures that when going fullscreen
-        // The top left corner of the view extent
-        // stays aligned with the top left corner
-        // of the view's container
         resizeAlign: "top-left"
     });
 
@@ -86,8 +82,8 @@ require([
     }
     slider.on("thumb-drag", inputHandler);
 
-    // Toggle animation on/off when user
-    // clicks on the play button
+    // Toggle animation on/off when user clicks on the play button
+
     playButton.addEventListener("click", () => {
         if (playButton.classList.contains("toggled")) {
             stopAnimation();
@@ -118,34 +114,17 @@ require([
         "top-right"
     );
 
-    // When the layerview is available, setup hovering interactivity
     view.whenLayerView(layer).then(setupHoverTooltip);
-
-    // Starts the application by visualizing year 1984
     setYear(1904);
-
-    //--------------------------------------------------------------------------
-    //
-    //  Methods
-    //
-    //--------------------------------------------------------------------------
-
-    /**
-     * Sets the current visualized construction year.
-     */
+  
+    //Sets the current visualized construction year.
+  
     function setYear(value) {
         sliderValue.innerHTML = Math.floor(value);
         slider.viewModel.setValue(0, value);
         layer.renderer = createRenderer(value);
     }
 
-    /**
-     * Returns a renderer with a color visual variable driven by the input
-     * year. The selected year will always render buildings built in that year
-     * with a light blue color. Buildings built 20+ years before the indicated
-     * year are visualized with a pink color. Buildings built within that
-     * 20-year time frame are assigned a color interpolated between blue and pink.
-     */
      function createRenderer(year) {
         const opacityStops = [
             {
@@ -202,10 +181,6 @@ require([
         };
     }
 
-    /**
-     * Sets up a moving tooltip that displays
-     * the construction year of the hovered building.
-     */
     function setupHoverTooltip(layerview) {
         let highlight;
 
