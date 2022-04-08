@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Nairobi Buildings Footprint</title>
+    <link rel="stylesheet" href="css/styles.css">
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.23/esri/themes/dark/main.css" />
+
+    <script src="https://js.arcgis.com/4.23/"></script>
+
+</head>
+
+<body>
+    <div id="applicationDiv">
+        <div id="viewDiv">
+            <div id="titleDiv" class="esri-widget">Nairobi Buildings by Year of Construction.</div>
+        </div>
+        <div id="sliderContainer" class="esri-widget">
+            <span id="sliderValue"></span>
+            <div id="sliderInnerContainer">
+                <div id="slider"></div>
+            </div>
+            <div id="playButton" class="esri-widget esri-widget--button toggle-button">
+                <div>
+                    <span class="toggle-button-icon esri-icon-play" aria-label="play icon"></span>
+                    Play
+                </div>
+                <div>
+                    <span class="toggle-button-icon esri-icon-pause" aria-label="pause icon"></span>
+                    Pause
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/scripts.js"></script>
+</body>
+
+</html>
